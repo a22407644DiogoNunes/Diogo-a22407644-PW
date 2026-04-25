@@ -62,3 +62,23 @@ class Projeto(models.Model):
 
     def __str__(self):
         return self.nome
+    
+class TFC(models.Model): # Trabalho de Fim de Curso
+    nome = models.CharField(max_length=255)
+    orientadores = models.TextField()
+    ano = models.IntegerField()
+    descricao = models.TextField()
+    link_doc = models.URLField()
+    tecnologias = models.ManyToManyField(Tecnologia, related_name="tfcs", blank=True)
+
+    def __str__(self):
+        return self.nome
+
+class Formacao(models.Model):
+    nome = models.CharField(max_length=255)
+    instituicao = models.CharField(max_length=255)
+    descricao = models.TextField()
+    tecnologias = models.ManyToManyField(Tecnologia, related_name="formacoes", blank=True)
+
+    def __str__(self):
+        return self.nome
