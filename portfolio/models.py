@@ -65,10 +65,13 @@ class Projeto(models.Model):
     
 class TFC(models.Model): # Trabalho de Fim de Curso
     nome = models.CharField(max_length=255)
+    autores = models.TextField()
+    email = models.EmailField(null=True, blank=True)
     orientadores = models.TextField()
     ano = models.IntegerField()
-    descricao = models.TextField()
-    link_doc = models.URLField()
+    resumo = models.TextField()
+    imagem = models.URLField(null=True, blank=True)
+    pdf = models.URLField(null=True, blank=True)
     tecnologias = models.ManyToManyField(Tecnologia, related_name="tfcs", blank=True)
 
     def __str__(self):
