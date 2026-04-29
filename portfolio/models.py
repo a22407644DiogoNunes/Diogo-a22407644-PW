@@ -24,7 +24,7 @@ class UnidadeCurricular(models.Model):
     ects = models.IntegerField()
     descricao = models.TextField()
     ano = models.IntegerField()
-    semestre = models.IntegerField()
+    semestre = models.CharField(max_length=20)
     imagem = models.ImageField(upload_to='ucs/', null=True, blank=True)
     licenciatura = models.ForeignKey(Licenciatura, on_delete=models.CASCADE, related_name="unidades_curriculares")
     docentes = models.ManyToManyField(Docente, related_name="unidades_curriculares", blank=True)
@@ -82,6 +82,17 @@ class Formacao(models.Model):
     instituicao = models.CharField(max_length=255)
     descricao = models.TextField()
     tecnologias = models.ManyToManyField(Tecnologia, related_name="formacoes", blank=True)
+
+    def __str__(self):
+        return self.nome
+    
+class MakingOf(models.Model):
+    nome = models.TextField()
+    descricao = models.TextField()
+    erros_correcoes = models.TextField(blank=True)
+    foto_papel = models.ImageField(upload_to='makingof/', blank=True)
+    uso_ia = models.TextField(blank=True)
+    data_relatorio = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.nome

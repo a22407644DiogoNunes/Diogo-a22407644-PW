@@ -1,6 +1,12 @@
-# script to download from Lusofona API jsons of all courses and ucs descriptions
+# populate_licenciatura_ucs.py
+# python manage.py shell < portfolio/loaderCurso.py
 
-import requests, json, os
+import requests
+from portfolio.models import Licenciatura, UnidadeCurricular, Docente
+
+Licenciatura.objects.all().delete()
+UnidadeCurricular.objects.all().delete()
+
 schoolYear = '202526'
 
 courses = [
@@ -15,46 +21,69 @@ courses = [
   6634, #lcid
 ]
 
-course = 260      # LEI
+course = 260
 
-for language in ['PT', 'ENG']:
+API_COURSE = "https://secure.ensinolusofona.pt/dados-publicos-academicos/resources/GetCourseDetail"
+API_UC = "https://secure.ensinolusofona.pt/dados-publicos-academicos/resources/GetSIGESCurricularUnitDetails"
 
-    url = 'https://secure.ensinolusofona.pt/dados-publicos-academicos/resources/GetCourseDetail'
+headers = {"content-type": "application/json"}
 
-    # Define the payload data to be sent in the POST request
-    payload = {
-        'language': language,
-        'courseCode': course,
-        'schoolYear': schoolYear
+payload = {
+    "language": "PT",
+    "courseCode": course,
+    "schoolYear": schoolYear
+}
+
+response = requests.post(API_COURSE, json=payload, headers=headers)
+data = response.json()
+
+licenciatura, _ = Licenciatura.objects.update_or_create(
+    nome=data.get("courseName", f"Curso {course}"),
+    defaults={
+        "grau": data.get("diplomaDegree", ""),
+        "ects_totais": int(data.get("totalECTS") or 0),
+        "duracao": str(data.get("duration") or ""),
+        "url_site": data.get("url", "")
+    }
+)
+
+for uc in data.get("courseFlatPlan", []):
+
+    uc_code = uc["curricularIUnitReadableCode"]
+
+    payload_uc = {
+        "language": "PT",
+        "curricularIUnitReadableCode": uc_code
     }
 
-    # Set the content-type header to 'application/json'
-    headers = {'content-type': 'application/json'}
+    response_uc = requests.post(API_UC, json=payload_uc, headers=headers)
+    uc_data = response_uc.json()
 
-    # Send the POST request
-    response = requests.post(url, json=payload, headers=headers)
-    response_dict = response.json()
+    uc_obj, _ = UnidadeCurricular.objects.get_or_create(
+        nome=uc_data.get("curricularUnitName") or uc.get("name") or uc_code,
+        licenciatura=licenciatura,
+        defaults={
+            "ects": int(uc_data.get("ects") or uc.get("ects") or 0),
+            "descricao": uc_data.get("programme") or uc_data.get("programContents") or "",
+            "ano": int(uc.get("curricularYear") or 1),
+            "semestre": uc.get("semester") or ""
+        }
+    )
 
-    with open(os.path.join('files',f"ULHT{course}-{language}.json"), "w", encoding="utf-8") as f:
-      json.dump(response_dict, f, indent=4)
+    for doc in uc_data.get("teachers") or []:
+        nome = doc.get("name")
+        if not nome:
+            continue
 
+        docente, _ = Docente.objects.get_or_create(
+            nome=nome,
+            defaults={
+                "email": doc.get("email")
+            }
+        )
 
-    for uc in response_dict['courseFlatPlan']:
-      url = 'https://secure.ensinolusofona.pt/dados-publicos-academicos/resources/GetSIGESCurricularUnitDetails'
+        uc_obj.docentes.add(docente)
 
-      # Define the payload data to be sent in the POST request
-      payload = {
-          'language': language,
-          'curricularIUnitReadableCode': uc['curricularIUnitReadableCode'],
-      }
+    uc_obj.save()
 
-      # Set the content-type header to 'application/json'
-      headers = {'content-type': 'application/json'}
-
-      # Send the POST request
-      response_uc = requests.post(url, json=payload, headers=headers)
-
-      response_uc_dict = response_uc.json()
-
-      with open(os.path.join('files',f"{uc['curricularIUnitReadableCode']}-{language}.json"), "w", encoding="utf-8") as f:
-        json.dump(response_uc_dict, f, indent=4)
+    print(f"{uc_code} — {uc_obj.nome}")
