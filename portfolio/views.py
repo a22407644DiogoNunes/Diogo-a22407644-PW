@@ -3,19 +3,19 @@ from .models import Licenciatura, UnidadeCurricular, Tecnologia, Projeto, TFC, C
 
 def licenciatura_view(request):
 
-    licenciatura = Licenciatura.objects.select_related('docentes').all()
+    licenciatura = Licenciatura.objects.prefetch_related('docentes').all()
 
     return render(request, 'portfolio/licenciatura.html',{'licenciatura':licenciatura})
 
 def unidadeCurricular_view(request):
 
-    unidadeCurricular = UnidadeCurricular.objects.select_related('docentes').prefetch_related('licenciatura').all()
+    unidadeCurricular = UnidadeCurricular.objects.select_related('licenciatura').prefetch_related('docentes').all()
 
     return render(request, 'portfolio/unidadeCurricular.html',{'unidadeCurricular':unidadeCurricular})
 
 def tecnologia_view(request):
 
-    tecnologia = Tecnologia.objects.select_related('unidades_curriculares').all()
+    tecnologia = Tecnologia.objects.prefetch_related('unidades_curriculares').all()
 
     return render(request, 'portfolio/tecnologia.html',{'tecnologia':tecnologia})
 
@@ -27,19 +27,19 @@ def competencia_view(request):
 
 def projeto_view(request):
 
-    projeto = Projeto.objects.select_related('tecnologias').select_related('competencias').prefetch_related('unidade_curricular').all()
+    projeto = Projeto.objects.select_related('unidade_curricular').prefetch_related('tecnologias', 'competencias').all()
 
     return render(request, 'portfolio/projeto.html',{'projeto':projeto})
 
 def tfc_view(request):
 
-    tfc = TFC.objects.select_related('tecnologias').all()
+    tfc = TFC.objects.prefetch_related('tecnologias').all()
 
     return render(request, 'portfolio/tfc.html',{'tfc':tfc})
 
 def formacao_view(request):
 
-    formacao = Formacao.objects.select_related('tecnologias').all()
+    formacao = Formacao.objects.prefetch_related('tecnologias').all()
 
     return render(request,'portfolio/formacao.html',{'formacao':formacao})
 
