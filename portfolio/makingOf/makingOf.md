@@ -19,3 +19,12 @@
 # Usei AI no que?
 1. Usei para ajudar a finalizar a modelação, pois é muito chato estar a escrever "nome = models.CharField(max_length=100)" fazendo a mão as tres primeiras classes depois pedi para fazer o resto usando o que já tinha como modelo, para evitar alucinação.
 2. Usei para ajudar a resolver um problema na minha logica no loader.
+
+## Lab7
+
+#Dificuldades e Erros
+1. Honestamente não muitos mas os urls ainda tenho que trabalhar um pouco mais pois perco-me um pouco com os varios nomes
+
+# Usei Ai no que?
+1. Usei para me ajudar a fazer os html e o css
+2. Usei para me ajudar os erros que tinha no urls resumidamente era so erros de caminhos nada de muito grave
