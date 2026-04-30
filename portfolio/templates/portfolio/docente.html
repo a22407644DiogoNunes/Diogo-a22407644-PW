@@ -1,0 +1,46 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+<h2>Docentes</h2>
+
+<section class="lista">
+    {% for d in docente %}
+    <article class="card">
+        <header>
+            <h3>{{ d.nome }}</h3>
+        </header>
+
+        <section>
+            {% if d.email %}
+                <p><strong>Email:</strong> {{ d.email }}</p>
+            {% else %}
+                <p><strong>Email:</strong> Não disponível</p>
+            {% endif %}
+        </section>
+
+        <section>
+            <h4>Licenciaturas</h4>
+            <ul>
+                {% for l in d.licenciaturas.all %}
+                    <li>{{ l.nome }}</li>
+                {% empty %}
+                    <li>Sem licenciaturas</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section>
+            <h4>Unidades Curriculares</h4>
+            <ul>
+                {% for uc in d.unidades_curriculares.all %}
+                    <li>{{ uc.nome }}</li>
+                {% empty %}
+                    <li>Sem UCs</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}

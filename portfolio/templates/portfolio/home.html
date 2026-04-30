@@ -1,0 +1,49 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+<h2>Bem-vindo ao Portfolio</h2>
+
+<section class="lista">
+
+    <article class="card">
+        <header>
+            <h3>Licenciaturas</h3>
+        </header>
+        <section>
+            <p>Consulta as licenciaturas disponíveis.</p>
+            <a href="{% url 'licenciatura' %}">Ver mais</a>
+        </section>
+    </article>
+
+    <article class="card">
+        <header>
+            <h3>Projetos</h3>
+        </header>
+        <section>
+            <p>Explora os projetos desenvolvidos.</p>
+            <a href="{% url 'projeto' %}">Ver mais</a>
+        </section>
+    </article>
+
+    <article class="card">
+        <header>
+            <h3>Tecnologias</h3>
+        </header>
+        <section>
+            <p>Lista de tecnologias usadas.</p>
+            <a href="{% url 'tecnologia' %}">Ver mais</a>
+        </section>
+    </article>
+
+    <article class="card">
+        <header>
+            <h3>TFC</h3>
+        </header>
+        <section>
+            <p>Trabalhos de fim de curso.</p>
+            <a href="{% url 'tfc' %}">Ver mais</a>
+        </section>
+    </article>
+
+</section>
+{% endblock %}

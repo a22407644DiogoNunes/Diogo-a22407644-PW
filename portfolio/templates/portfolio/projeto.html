@@ -1,0 +1,39 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+<h2>Projetos</h2>
+
+<section class="lista">
+    {% for p in projeto %}
+    <article class="card">
+        <header>
+            <h3>{{ p.nome }}</h3>
+        </header>
+
+        <section>
+            <p>{{ p.descricao }}</p>
+            <p><strong>UC:</strong> {{ p.unidade_curricular.nome }}</p>
+            <p><a href="{{ p.link_github }}">GitHub</a></p>
+        </section>
+
+        <section>
+            <h4>Tecnologias</h4>
+            <ul>
+                {% for t in p.tecnologias.all %}
+                    <li>{{ t.nome }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section>
+            <h4>Competências</h4>
+            <ul>
+                {% for c in p.competencias.all %}
+                    <li>{{ c.nome }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}

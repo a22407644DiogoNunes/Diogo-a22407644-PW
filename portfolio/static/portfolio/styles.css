@@ -1,0 +1,160 @@
+/* portfolio/static/portfolio/styles.css */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* BODY */
+body {
+    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: #eef2f7;
+    color: #111827;
+    line-height: 1.6;
+}
+
+/* HEADER */
+body > header {
+    background: #111827;
+    color: white;
+    padding: 22px 40px;
+}
+
+body > header h1 {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+body > header nav {
+    margin-top: 10px;
+}
+
+body > header nav a {
+    color: #9ca3af;
+    margin-right: 18px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+body > header nav a:hover {
+    color: white;
+}
+
+/* MAIN */
+main {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* TITULOS */
+h2 {
+    margin-bottom: 25px;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+/* LISTA (GRID FLEXÍVEL) */
+.lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    transition: all 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 35px rgba(0,0,0,0.12);
+}
+
+/* HEADER DO CARD */
+.card > header {
+    margin-bottom: 12px;
+}
+
+.card > header h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.card > header p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* SEÇÕES INTERNAS */
+.card > section {
+    margin-top: 12px;
+}
+
+.card > section h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+}
+
+/* TEXTO */
+.card p {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #374151;
+}
+
+/* LINKS */
+.card a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
+
+/* LISTAS (tags estilo pills) */
+.card ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* ITEM (pill) */
+.card ul li {
+    background: #2563eb;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* IMAGENS */
+.card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #111827;
+    color: #9ca3af;
+    margin-top: 50px;
+    font-size: 14px;
+}

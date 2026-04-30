@@ -1,0 +1,22 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+<h2>Making Of</h2>
+
+<section class="lista">
+    {% for m in makingof %}
+    <article class="card">
+        <header>
+            <h3>{{ m.nome }}</h3>
+        </header>
+
+        <section>
+            <p>{{ m.descricao }}</p>
+            <p><strong>Erros e correções:</strong> {{ m.erros_correcoes }}</p>
+            <p><strong>Uso de IA:</strong> {{ m.uso_ia }}</p>
+            <p><strong>Data:</strong> {{ m.data_relatorio }}</p>
+        </section>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+<h2>Tecnologias</h2>
+
+<section class="lista">
+    {% for t in tecnologia %}
+    <article class="card">
+        <header>
+            <h3>{{ t.nome }}</h3>
+        </header>
+
+        <section>
+            <p>{{ t.descricao }}</p>
+            <p><strong>Interesse:</strong> {{ t.interesse_pessoal }}</p>
+            {% if t.link_site %}
+                <p><a href="{{ t.link_site }}">Site</a></p>
+            {% endif %}
+        </section>
+
+        <section>
+            <h4>Unidades Curriculares</h4>
+            <ul>
+                {% for uc in t.unidades_curriculares.all %}
+                    <li>{{ uc.nome }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}

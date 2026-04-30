@@ -1,1 +1,33 @@
 {% extends "portfolio/base.html" %}
+
+{% block content %}
+<h2>Licenciaturas</h2>
+
+<section class="lista">
+    {% for l in licenciatura %}
+    <article class="card">
+        <header>
+            <h3>{{ l.nome }}</h3>
+        </header>
+
+        <section>
+            <p><strong>Grau:</strong> {{ l.grau }}</p>
+            <p><strong>ECTS:</strong> {{ l.ects_totais }}</p>
+            <p><strong>Duração:</strong> {{ l.duracao }}</p>
+            <p><a href="{{ l.url_site }}">Site</a></p>
+        </section>
+
+        <section>
+            <h4>Docentes</h4>
+            <ul>
+                {% for d in l.docentes.all %}
+                    <li>{{ d.nome }}</li>
+                {% empty %}
+                    <li>Sem docentes</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "portfolio/base.html" %}
+
+{% block content %}
+<h2>Unidades Curriculares</h2>
+
+<section class="lista">
+    {% for uc in unidadeCurricular %}
+    <article class="card">
+        <header>
+            <h3>{{ uc.nome }}</h3>
+        </header>
+
+        <section>
+            <p><strong>Licenciatura:</strong> {{ uc.licenciatura.nome }}</p>
+            <p><strong>ECTS:</strong> {{ uc.ects }}</p>
+            <p><strong>Ano:</strong> {{ uc.ano }}</p>
+            <p><strong>Semestre:</strong> {{ uc.semestre }}</p>
+            <p>{{ uc.descricao }}</p>
+        </section>
+
+        <section>
+            <h4>Docentes</h4>
+            <ul>
+                {% for d in uc.docentes.all %}
+                    <li>{{ d.nome }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}

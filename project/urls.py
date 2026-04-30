@@ -9,7 +9,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),    
     path("cursos/", include("cursos.urls")),
     path("portfolio/", include("portfolio.urls")), 
-    path("", include("cursos.urls")),
+    path("", include("portfolio.urls")),
 ]
 
 # Sere ficheiros media em DEBUG

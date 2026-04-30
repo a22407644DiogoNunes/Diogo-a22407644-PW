@@ -1,11 +1,20 @@
 from django.shortcuts import render
 from .models import Licenciatura, UnidadeCurricular, Tecnologia, Projeto, TFC, Competencia, Docente, Formacao, MakingOf
 
+def portfolio_home(request):
+    return render(request, 'portfolio/home.html')
+
 def licenciatura_view(request):
 
     licenciatura = Licenciatura.objects.prefetch_related('docentes').all()
 
     return render(request, 'portfolio/licenciatura.html',{'licenciatura':licenciatura})
+
+def docente_view(request):
+
+    docente = Docente.objects.all()
+
+    return render(request, 'portfolio/docente.html',{'docente':docente})
 
 def unidadeCurricular_view(request):
 
