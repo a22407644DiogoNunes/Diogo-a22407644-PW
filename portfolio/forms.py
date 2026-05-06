@@ -29,7 +29,8 @@ class TecnologiaForm(forms.ModelForm):
             'descricao',
             'interesse_pessoal',
             'link_site',
-            'imagem'
+            'imagem',
+            'unidades_curriculares'
         ] 
 
         widgets = {
@@ -45,14 +46,15 @@ class CompetenciaForm(forms.ModelForm):
             'descricao'
         ]
 
-class Formacao(forms.ModelForm):
+class FormacaoForm(forms.ModelForm):
     class Meta:
         model=Formacao
 
         fields = [
             'nome',
             'instituicao',
-            'descricao'
+            'descricao',
+            'tecnologias'
         ]
 
         widgets = {
