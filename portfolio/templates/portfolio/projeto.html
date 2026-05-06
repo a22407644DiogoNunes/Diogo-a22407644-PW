@@ -3,6 +3,10 @@
 {% block content %}
 <h2>Projetos</h2>
 
+<a href="{% url 'novo_projeto' %}">
+    <button>Inserir novo Projeto</button>
+</a>
+
 <section class="lista">
     {% for p in projeto %}
     <article class="card">

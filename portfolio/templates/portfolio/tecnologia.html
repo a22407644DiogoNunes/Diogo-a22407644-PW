@@ -3,6 +3,10 @@
 {% block content %}
 <h2>Tecnologias</h2>
 
+<a href="{% url 'novo_tecnologia' %}">
+    <button>Inserir nova Tecnologia</button>
+</a>
+
 <section class="lista">
     {% for t in tecnologia %}
     <article class="card">
