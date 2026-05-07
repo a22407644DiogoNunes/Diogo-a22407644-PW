@@ -21,6 +21,10 @@
         <a href="{% url 'edita_competencia' c.id %}">
             <button>Editar informação do Competencia</button>
         </a>
+
+        <a href="{% url 'apaga_competencia' c.id %}">
+            <button>Apagar autor e seus livros</button>
+        </a>
     </article>
     {% endfor %}
 </section>

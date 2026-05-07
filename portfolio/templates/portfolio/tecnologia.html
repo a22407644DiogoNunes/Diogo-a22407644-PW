@@ -34,6 +34,10 @@
         <a href="{% url 'edita_tecnologia' t.id %}">
             <button>Editar informação do Tecnologia</button>
         </a>
+
+        <a href="{% url 'apaga_tecnologia' t.id %}">
+            <button>Apagar Tecnologia</button>
+        </a>
     </article>
     {% endfor %}
 </section>

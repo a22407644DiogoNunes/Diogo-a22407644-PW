@@ -41,6 +41,10 @@
         <a href="{% url 'edita_projeto' p.id %}">
             <button>Editar informação do Projeto</button>
         </a>
+
+        <a href="{% url 'apaga_projeto' p.id %}">
+            <button>Apagar Projeto</button>
+        </a>
     </article>
     {% endfor %}
 </section>

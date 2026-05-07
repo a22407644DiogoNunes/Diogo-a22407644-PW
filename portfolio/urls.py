@@ -21,5 +21,10 @@ urlpatterns = [
     path('projeto/<int:projeto_id>/edita', views.edita_projeto_view,name="edita_projeto"),
     path('tecnologia/<int:tecnologia_id>/edita', views.edita_tecnologia_view,name="edita_tecnologia"),
     path('competencia/<int:competencia_id>/edita', views.edita_competencia_view,name="edita_competencia"),
-    path('formacao/<int:formacao_id>/edita', views.edita_formacao_view,name="edita_formacao")
+    path('formacao/<int:formacao_id>/edita', views.edita_formacao_view,name="edita_formacao"),
+
+    path('projeto/<int:projeto_id>/apaga', views.apaga_projeto_view, name = "apaga_projeto"),
+    path('tecnologia/<int:tecnologia_id>/apaga', views.apaga_tecnologia_view, name = "apaga_tecnologia"),
+    path('competencia/<int:competencia_id>/apaga', views.apaga_competencia_view, name = "apaga_competencia"),
+    path('formacao/<int:formacao_id>/apaga', views.apaga_formacao_view, name = "apaga_formacao")
 ]

@@ -31,6 +31,10 @@
         <a href="{% url 'edita_formacao' f.id %}">
             <button>Editar informação do Formação</button>
         </a>
+
+        <a href="{% url 'apaga_formacao' f.id %}">
+            <button>Apagar Formação</button>
+        </a>
     </article>
     {% endfor %}
 </section>
