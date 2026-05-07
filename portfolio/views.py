@@ -48,6 +48,20 @@ def novo_tecnologia_view(request):
     context = {'form': form}
     return render(request, 'portfolio/novo_tecnologia.html', context)
 
+def edita_tecnologia_view(request, tecnologia_id):
+    tecnologia = Tecnologia.objects.get(id=tecnologia_id)
+    
+    if request.POST:
+        form = TecnologiaForm(request.POST or None, request.FILES, instance=tecnologia)
+        if form.is_valid():
+            form.save()
+            return redirect('tecnologia')
+    else:
+        form = TecnologiaForm(instance=tecnologia)  # cria formulário com dados da instância autor
+        
+    context = {'form': form, 'tecnologia':tecnologia}
+    return render(request, 'portfolio/edita_tecnologia.html', context)
+
 #-------------------------------------------------------------------------------------#
 
 def competencia_view(request):
@@ -65,6 +79,20 @@ def novo_competencia_view(request):
     context = {'form': form}
     return render(request, 'portfolio/novo_competencia.html', context)
 
+def edita_competencia_view(request, competencia_id):
+    competencia = Competencia.objects.get(id=competencia_id)
+
+    if request.POST:
+        form = CompetenciaForm(request.POST or None, request.FILES, instance=competencia)
+        if form.is_valid():
+            form.save()
+            return redirect('competencia')
+        else:
+            form = CompetenciaForm(instance=competencia)
+
+        context = {'form': form, 'competencia':competencia}
+        return render(request, 'portfolio/edita_competencia.html', context)
+
 #-------------------------------------------------------------------------------------#
 
 def projeto_view(request):
@@ -81,6 +109,21 @@ def novo_projeto_view(request):
     
     context = {'form': form}
     return render(request, 'portfolio/novo_projeto.html', context)
+
+def edita_projeto_view(request, projeto_id):
+    projeto = Projeto.objects.get(id=projeto_id)
+
+    if request.POST:
+        form = ProjetoForm(request.POST or None, request.FILES, instance=projeto)
+        if form.is_valid():
+            form.save()
+            return redirect('projeto')
+        else:
+            form = ProjetoForm(instance=projeto)
+
+        context = {'form': form, 'projeto':projeto}
+        return render(request, 'portfolio/edita_projeto.html', context)
+
 
 #-------------------------------------------------------------------------------------#
 
@@ -106,6 +149,21 @@ def novo_formacao_view(request):
     
     context = {'form': form}
     return render(request, 'portfolio/novo_formacao.html', context)
+
+def edita_formacao_view(request, formacao_id):
+    formacao = Formacao.objects.get(id=formacao_id)
+
+    if request.POST:
+        form = FormacaoForm(request.POST or None, request.FILES, instance=formacao)
+        if form.is_valid():
+            form.save()
+            return redirect('formacao')
+        else:
+            form = FormacaoForm(instance=formacao)
+
+        context = {'form': form, 'formacao':formacao}
+        return render(request, 'portfolio/edita_formacao.html', context)
+
 
 #-------------------------------------------------------------------------------------#
 
