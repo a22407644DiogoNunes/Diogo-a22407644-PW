@@ -17,6 +17,10 @@
         <section>
             <p>{{ c.descricao }}</p>
         </section>
+
+        <a href="{% url 'edita_competencia' c.id %}">
+            <button>Editar informação do Competencia</button>
+        </a>
     </article>
     {% endfor %}
 </section>

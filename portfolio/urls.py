@@ -12,8 +12,14 @@ urlpatterns = [
     path('formacoes/', views.formacao_view, name="formacao"),
     path('competencias/', views.competencia_view, name="competencia"),
     path('makingof/', views.makingof_view, name="makingOf"),
+
     path('projeto/novo', views.novo_projeto_view, name="novo_projeto"),
     path('tecnologia/novo', views.novo_tecnologia_view, name="novo_tecnologia"),
     path('competencia/novo', views.novo_competencia_view, name="novo_competencia"),
     path('formacao/novo', views.novo_formacao_view, name="novo_formacao"),
+
+    path('projeto/<int:projeto_id>/edita', views.edita_projeto_view,name="edita_projeto"),
+    path('tecnologia/<int:tecnologia_id>/edita', views.edita_tecnologia_view,name="edita_tecnologia"),
+    path('competencia/<int:competencia_id>/edita', views.edita_competencia_view,name="edita_competencia"),
+    path('formacao/<int:formacao_id>/edita', views.edita_formacao_view,name="edita_formacao")
 ]
