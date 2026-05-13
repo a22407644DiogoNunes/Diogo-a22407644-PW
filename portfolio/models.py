@@ -32,9 +32,26 @@ class UnidadeCurricular(models.Model):
     def __str__(self):
         return self.nome
 
+class TipoTecnologia(models.Model):
+    TIPOS = [
+        ('frontend', 'Frontend'),
+        ('backend', 'Backend'),
+        ('base_dados', 'Base de Dados'),
+        ('storage', 'Storage'),
+        ('outros', 'Outros'),
+    ]
+    nome = models.CharField(max_length=50, choices=TIPOS, unique=True)
+
+    def __str__(self):
+        return self.get_nome_display()
+
 class Tecnologia(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.TextField()
+    o_que_faz = models.TextField(blank=True)               # NOVO
+    o_que_permite = models.TextField(blank=True)
+    opiniao_pessoal = models.TextField(blank=True)         # NOVO (substitui interesse_pessoal bool)
+    tipo = models.ForeignKey(TipoTecnologia,on_delete=models.SET_NULL,null=True, blank=True,related_name="tecnologias")  
     interesse_pessoal = models.BooleanField(default=False)
     link_site = models.URLField(null=True, blank=True)
     imagem = models.ImageField(upload_to='tecnologias/', null=True, blank=True)

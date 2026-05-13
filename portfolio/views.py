@@ -190,3 +190,15 @@ def makingof_view(request):
     makingof = MakingOf.objects.all()
 
     return render(request,'portfolio/makingof.html',{'makingof':makingof})
+
+#-------------------------------------------------------------------------------------#
+
+def sobre_esta_aplicacao_view(request):
+
+    texto = """
+#Sobre esta Aplicação
+#  
+
+"""
+
+    return render(request, 'portfolio/sobre_esta_aplicacao.html',{'texto':texto})

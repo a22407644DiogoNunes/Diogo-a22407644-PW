@@ -12,6 +12,7 @@ urlpatterns = [
     path('formacoes/', views.formacao_view, name="formacao"),
     path('competencias/', views.competencia_view, name="competencia"),
     path('makingof/', views.makingof_view, name="makingOf"),
+    path('sobre_esta_aplicacao',views.sobre_esta_aplicacao_view ,name = "sobre_esta_aplicacao"),
 
     path('projeto/novo', views.novo_projeto_view, name="novo_projeto"),
     path('tecnologia/novo', views.novo_tecnologia_view, name="novo_tecnologia"),
