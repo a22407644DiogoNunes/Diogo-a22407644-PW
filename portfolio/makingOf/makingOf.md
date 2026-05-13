@@ -28,3 +28,25 @@
 # Usei Ai no que?
 1. Usei para me ajudar a fazer os html e o css
 2. Usei para me ajudar os erros que tinha no urls resumidamente era so erros de caminhos nada de muito grave
+
+## Lab 9 - Autenticação
+
+# Modelação
+
+1. Criação da app `accounts` para gerir toda a autenticação do projeto
+2. Uso do modelo `User` já incluído no Django, sem necessidade de criar models próprios
+3. Criação do modelo `PerfilUtilizador` com ligação 1 para 1 ao `User`, para guardar o token do link mágico
+4. Criação da app `artigos` com o modelo `Artigo` ligado ao `User` por uma relação N para 1 (vários artigos podem pertencer ao mesmo autor)
+5. Modelo `Artigo` tem ligação N para N com `User` para os likes, pois vários utilizadores podem gostar de vários artigos
+6. Modelo `Comentario` ligado ao `Artigo` por 1 para N, pois um artigo pode ter vários comentários, e ligado ao `User` também por 1 para N pois um utilizador pode fazer vários comentários
+
+# Dificuldades e Erros
+1. Dificuldade em perceber que o `base.html` estava em `escola/base.html` e não em `base.html` diretamente, o que causou um `TemplateDoesNotExist`
+2. Erro `NoReverseMatch` porque o nome da URL da página principal era `portfolio_home` e não `portfolio`
+3. Erro `MultipleObjectsReturned` no link mágico porque havia dois utilizadores com o mesmo email na base de dados, resolvido com `filter().first()` em vez de `get()`
+4. Dificuldade em configurar o email do Gmail pois a conta era escolar e não permitia criar app passwords, resolvido usando a conta pessoal com verificação em dois passos ativa
+
+# Usei AI no que?
+1. Quando estava a implementar a app `accounts` fui buscar ajuda para perceber como estruturar tudo junto — o AI funcionou como um guia para não me perder entre os vários ficheiros
+2. Na parte do link mágico precisei de apoio para ligar as peças todas, o conceito estava nos slides mas a implementação tinha alguns detalhes que não eram óbvios
+3. Na app `artigos` usei para não ter de escrever tudo do zero, explicava o que queria e ia ajustando o resultado ao meu projeto
