@@ -8,11 +8,25 @@
     <p style="color: red;">{{ mensagem }}</p>
 {% endif %}
 
-<form action="" method="post">
+<form action="{% url 'login' %}" method="post">
     {% csrf_token %}
     <p>Username: <input type="text" name="username" required></p>
     <p>Password: <input type="password" name="password" required></p>
     <input type="submit" value="Login">
+</form>
+
+<hr>
+
+<h3>Ou entra com Link Mágico</h3>
+
+{% if mensagem_magic %}
+    <p style="color: green;">{{ mensagem_magic }}</p>
+{% endif %}
+
+<form action="{% url 'magic_link' %}" method="post">
+    {% csrf_token %}
+    <p>Email: <input type="email" name="email" required></p>
+    <input type="submit" value="Enviar Link Mágico">
 </form>
 
 <p>Não tens conta? <a href="{% url 'registo' %}">Regista-te aqui</a></p>
