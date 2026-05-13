@@ -53,8 +53,11 @@ INSTALLED_APPS = [
     "loja",
     "portfolio",
     "cursos",
-    'markdownify.apps.MarkdownifyConfig',
+    "markdownify",
+    "accounts",
 ]
+
+LOGIN_URL = "login"
 
 MARKDOWNIFY = {
    "default": {

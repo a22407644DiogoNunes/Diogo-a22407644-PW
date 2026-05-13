@@ -1,7 +1,7 @@
 ## ficheiro projects/urls.py
 
 from django.contrib import admin
-from django.urls import path, include              #     <- adicionar include 
+from django.urls import path, include              
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -9,6 +9,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),    
     path("cursos/", include("cursos.urls")),
     path("portfolio/", include("portfolio.urls")), 
+    path("accounts/", include("accounts.urls")),
     path("", include("portfolio.urls")),
 ]
 

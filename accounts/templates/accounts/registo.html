@@ -1,0 +1,15 @@
+{% extends 'portfolio/base.html' %}
+
+{% block content %}
+
+<h3>Registo</h3>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Criar novo utilizador">
+</form>
+
+<p>Já tens conta? <a href="{% url 'login' %}">Faz login aqui</a></p>
+
+{% endblock %}
