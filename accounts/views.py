@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core.mail import send_mail
 from .forms import RegistoForm
 from .models import PerfilUtilizador
@@ -98,3 +98,17 @@ def autentica_magic_link_view(request):
         return render(request, 'accounts/login.html', {
             'mensagem': 'Link inválido.'
         })
+
+def registo_view(request):
+    if request.user.is_authenticated:
+        return redirect('portfolio_home')
+
+    form = RegistoForm(request.POST or None)
+
+    if form.is_valid():
+        user = form.save()
+        grupo_autores, _ = Group.objects.get_or_create(name='autores')
+        user.groups.add(grupo_autores)
+        return redirect('login')
+
+    return render(request, 'accounts/registo.html', {'form': form})

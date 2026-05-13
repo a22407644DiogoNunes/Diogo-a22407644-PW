@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "cursos",
     "markdownify",
     "accounts",
+    "artigos",
 ]
 
 LOGIN_URL = "login"
