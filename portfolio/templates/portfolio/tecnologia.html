@@ -3,9 +3,11 @@
 {% block content %}
 <h2>Tecnologias</h2>
 
-<a href="{% url 'novo_tecnologia' %}">
-    <button>Inserir nova Tecnologia</button>
-</a>
+{% if request.user.is_authenticated and request.user.groups.filter(name='gestor-portfolio').exists %}
+    <a href="{% url 'novo_tecnologia' %}">
+        <button>Inserir nova Tecnologia</button>
+    </a>
+{% endif %}
 
 <section class="lista">
     {% for t in tecnologia %}
@@ -31,13 +33,15 @@
             </ul>
         </section>
 
-        <a href="{% url 'edita_tecnologia' t.id %}">
-            <button>Editar informação do Tecnologia</button>
-        </a>
+        {% if request.user.is_authenticated and request.user.groups.filter(name='gestor-portfolio').exists %}
+            <a href="{% url 'edita_tecnologia' t.id %}">
+                <button>Editar informação do Tecnologia</button>
+            </a>
 
-        <a href="{% url 'apaga_tecnologia' t.id %}">
-            <button>Apagar Tecnologia</button>
-        </a>
+            <a href="{% url 'apaga_tecnologia' t.id %}">
+                <button>Apagar Tecnologia</button>
+            </a>
+        {% endif %}
     </article>
     {% endfor %}
 </section>

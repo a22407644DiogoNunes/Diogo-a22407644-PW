@@ -3,9 +3,11 @@
 {% block content %}
 <h2>Formação</h2>
 
-<a href="{% url 'novo_formacao' %}">
-    <button>Inserir novo Formacao</button>
-</a>
+{% if request.user.is_authenticated and request.user.groups.filter(name='gestor-portfolio').exists %}
+    <a href="{% url 'novo_formacao' %}">
+        <button>Inserir novo Formacao</button>
+    </a>
+{% endif %}
 
 <section class="lista">
     {% for f in formacao %}
@@ -28,13 +30,15 @@
             </ul>
         </section>
 
-        <a href="{% url 'edita_formacao' f.id %}">
-            <button>Editar informação do Formação</button>
-        </a>
+        {% if request.user.is_authenticated and request.user.groups.filter(name='gestor-portfolio').exists %}
+            <a href="{% url 'edita_formacao' f.id %}">
+                <button>Editar informação do Formação</button>
+            </a>
 
-        <a href="{% url 'apaga_formacao' f.id %}">
-            <button>Apagar Formação</button>
-        </a>
+            <a href="{% url 'apaga_formacao' f.id %}">
+                <button>Apagar Formação</button>
+            </a>
+        {% endif %}
     </article>
     {% endfor %}
 </section>

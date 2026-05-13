@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from .models import Licenciatura, UnidadeCurricular, Tecnologia, Projeto, TFC, Competencia, Docente, Formacao, MakingOf
 from .forms import ProjetoForm, TecnologiaForm, CompetenciaForm, FormacaoForm
+from django.contrib.auth.decorators import login_required
 
 #-------------------------------------------------------------------------------------#
 
@@ -39,6 +40,7 @@ def tecnologia_view(request):
 
     return render(request, 'portfolio/tecnologia.html',{'tecnologia':tecnologia})
 
+@login_required
 def novo_tecnologia_view(request):
     form = TecnologiaForm(request.POST or None, request.FILES)
     if form.is_valid():
@@ -48,6 +50,7 @@ def novo_tecnologia_view(request):
     context = {'form': form}
     return render(request, 'portfolio/novo_tecnologia.html', context)
 
+@login_required
 def edita_tecnologia_view(request, tecnologia_id):
     tecnologia = Tecnologia.objects.get(id=tecnologia_id)
     
@@ -62,6 +65,7 @@ def edita_tecnologia_view(request, tecnologia_id):
     context = {'form': form, 'tecnologia':tecnologia}
     return render(request, 'portfolio/edita_tecnologia.html', context)
 
+@login_required
 def apaga_tecnologia_view(request, tecnologia_id):
     tecnologia = Tecnologia.objects.get(id = tecnologia_id)
     tecnologia.delete()
@@ -75,6 +79,7 @@ def competencia_view(request):
 
     return render(request, 'portfolio/competencia.html',{'competencia':competencia})
 
+@login_required
 def novo_competencia_view(request):
     form = CompetenciaForm(request.POST or None)
     if form.is_valid():
@@ -84,6 +89,7 @@ def novo_competencia_view(request):
     context = {'form': form}
     return render(request, 'portfolio/novo_competencia.html', context)
 
+@login_required
 def edita_competencia_view(request, competencia_id):
     competencia = Competencia.objects.get(id=competencia_id)
 
@@ -98,6 +104,7 @@ def edita_competencia_view(request, competencia_id):
         context = {'form': form, 'competencia':competencia}
         return render(request, 'portfolio/edita_competencia.html', context)
 
+@login_required
 def apaga_competencia_view(request, competencia_id):
     competencia = Competencia.objects.get(id = competencia_id)
     competencia.delete()
@@ -111,6 +118,7 @@ def projeto_view(request):
 
     return render(request, 'portfolio/projeto.html',{'projeto':projeto})
 
+@login_required
 def novo_projeto_view(request):
     form = ProjetoForm(request.POST or None, request.FILES)
     if form.is_valid():
@@ -120,6 +128,7 @@ def novo_projeto_view(request):
     context = {'form': form}
     return render(request, 'portfolio/novo_projeto.html', context)
 
+@login_required
 def edita_projeto_view(request, projeto_id):
     projeto = Projeto.objects.get(id=projeto_id)
 
@@ -134,6 +143,7 @@ def edita_projeto_view(request, projeto_id):
         context = {'form': form, 'projeto':projeto}
         return render(request, 'portfolio/edita_projeto.html', context)
 
+@login_required
 def apaga_projeto_view(request, projeto_id):
     projeto = Projeto.objects.get(id = projeto_id)
     projeto.delete()
@@ -155,6 +165,7 @@ def formacao_view(request):
 
     return render(request,'portfolio/formacao.html',{'formacao':formacao})
 
+@login_required
 def novo_formacao_view(request):
     form = FormacaoForm(request.POST or None)
     if form.is_valid():
@@ -164,6 +175,7 @@ def novo_formacao_view(request):
     context = {'form': form}
     return render(request, 'portfolio/novo_formacao.html', context)
 
+@login_required
 def edita_formacao_view(request, formacao_id):
     formacao = Formacao.objects.get(id=formacao_id)
 
@@ -178,6 +190,7 @@ def edita_formacao_view(request, formacao_id):
         context = {'form': form, 'formacao':formacao}
         return render(request, 'portfolio/edita_formacao.html', context)
 
+@login_required
 def apaga_formacao_view(request, formacao_id):
     formacao = Formacao.objects.get(id = formacao_id)
     formacao.delete()

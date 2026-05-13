@@ -3,9 +3,11 @@
 {% block content %}
 <h2>Projetos</h2>
 
+{% if request.user.is_authenticated and request.user.groups.filter(name='gestor-portfolio').exists %}
 <a href="{% url 'novo_projeto' %}">
     <button>Inserir novo Projeto</button>
 </a>
+{% endif %}
 
 <section class="lista">
     {% for p in projeto %}
@@ -38,13 +40,15 @@
             </ul>
         </section>
 
-        <a href="{% url 'edita_projeto' p.id %}">
-            <button>Editar informação do Projeto</button>
-        </a>
+        {% if request.user.is_authenticated and request.user.groups.filter(name='gestor-portfolio').exists %}
+            <a href="{% url 'edita_projeto' p.id %}">
+                <button>Editar informação do Projeto</button>
+            </a>
 
-        <a href="{% url 'apaga_projeto' p.id %}">
-            <button>Apagar Projeto</button>
-        </a>
+            <a href="{% url 'apaga_projeto' p.id %}">
+                <button>Apagar Projeto</button>
+            </a>
+        {% endif %}
     </article>
     {% endfor %}
 </section>

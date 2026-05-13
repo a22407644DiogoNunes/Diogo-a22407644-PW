@@ -3,9 +3,11 @@
 {% block content %}
 <h2>Competências</h2>
 
-<a href="{% url 'novo_competencia' %}">
-    <button>Inserir nova Competecia</button>
-</a>
+{% if request.user.is_authenticated and request.user.groups.filter(name='gestor-portfolio').exists %}
+    <a href="{% url 'novo_competencia' %}">
+        <button>Inserir nova Competecia</button>
+    </a>
+{% endif %}
 
 <section class="lista">
     {% for c in competencia %}
@@ -18,13 +20,15 @@
             <p>{{ c.descricao }}</p>
         </section>
 
-        <a href="{% url 'edita_competencia' c.id %}">
-            <button>Editar informação do Competencia</button>
-        </a>
+        {% if request.user.is_authenticated and request.user.groups.filter(name='gestor-portfolio').exists %}
+            <a href="{% url 'edita_competencia' c.id %}">
+                <button>Editar informação do Competencia</button>
+            </a>
 
-        <a href="{% url 'apaga_competencia' c.id %}">
-            <button>Apagar autor e seus livros</button>
-        </a>
+            <a href="{% url 'apaga_competencia' c.id %}">
+                <button>Apagar autor e seus livros</button>
+            </a>
+        {% endif %}
     </article>
     {% endfor %}
 </section>
