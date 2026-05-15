@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Licenciatura,Docente,UnidadeCurricular,Tecnologia,Competencia,Projeto,TFC,Formacao
+from .models import Licenciatura,Docente,UnidadeCurricular,Tecnologia,Competencia,Projeto,TFC,Formacao,MakingOf
 # Register your models here.
 
 class DocenteAdmin(admin.ModelAdmin):
@@ -54,3 +54,9 @@ class FormacaoAdmin(admin.ModelAdmin):
     ordering = ("nome",)
     search_fields = ("nome", "instituicao",)
 admin.site.register(Formacao,FormacaoAdmin)
+
+class MakingOfAdmin(admin.ModelAdmin):
+    list_display = ("nome", "data_relatorio",)
+    ordering = ("-data_relatorio",)
+    search_fields = ("nome",)
+admin.site.register(MakingOf, MakingOfAdmin)
