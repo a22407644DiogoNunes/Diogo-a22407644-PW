@@ -38,8 +38,8 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': env('CLOUDINARY_API_SECRET'),
 }
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_URL = '/media/'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Quick-start development settings - unsuitable for production
