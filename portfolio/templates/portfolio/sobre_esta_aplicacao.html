@@ -63,9 +63,7 @@
 
     <h3>Diagrama Entidade-Relação</h3>
     <div class="desenho-box">
-        <img src="/makingOf/media/ER.jpg" alt="Diagrama ER desenhado em papel"
-             style="max-width:100%;border-radius:6px;"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <img src="{{foto_er}}" alt="Diagrama ER desenhado em papel" style="max-width:100%;border-radius:6px;">
     </div>
 
     <h3>Relações entre entidades</h3>
@@ -197,10 +195,9 @@ class Projeto(models.Model):
     <h2>5. Repositório GitHub</h2>
     <p>
         O código fonte desta aplicação está disponível no GitHub:<br>
-        <a href="https://github.com/SEU_UTILIZADOR/SEU_REPOSITORIO" target="_blank" style="font-weight:600;">
-            github.com/SEU_UTILIZADOR/SEU_REPOSITORIO
+        <a href="{{ github_url }}" target="_blank" style="font-weight:600;">
+            Visitar Repositório no GitHub
         </a>
-        <br><small style="color:#9ca3af;">Substituir pelo link real do repositório.</small>
     </p>
 
     <h3>Como usei o Git e o GitHub</h3>

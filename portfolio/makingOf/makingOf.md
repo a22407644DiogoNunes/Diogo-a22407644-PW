@@ -1,6 +1,6 @@
 # Modelação
 
-<img src="media/IMG_20260424_230347.jpg" width="300">
+<img src="media/makingOf/IMG_20260424_230347.jpg" width="300">
 
 1. ligação Licenciatura-Docente é N para N, pois um curso por exemplo Licenciatura Engenharia Informatica tem varios docentes/professores ao mesmo tempo que esse docente pode estar em varios cursos
 2. ligação Licenciatura-Unidade_Curricular tembem é N para N pelo mesmo motivo que Licenciatura-Docente exemplo, tanto Engenharia Informatica e Engenharia Informatica de Redes e Telecumincações tem uma unidade curricular chamada Redes e Telecuminações

@@ -3,7 +3,7 @@
 {% block content %}
 <h2>Artigos</h2>
 
-{% if request.user.groups.filter(name='autores').exists %}
+{% if is_autor %}
     <a href="{% url 'novo_artigo' %}"><button>Novo Artigo</button></a>
 {% endif %}
 
@@ -19,7 +19,7 @@
         <p>{{ artigo.texto|truncatewords:30 }}</p>
         <p>👍 {{ artigo.likes.count }} gostos</p>
 
-        {% if request.user.is_authenticated and request.user == artigo.autor %}
+        {% if is_autor %}
             <a href="{% url 'edita_artigo' artigo.id %}"><button>Editar</button></a>
             <a href="{% url 'apaga_artigo' artigo.id %}"><button>Apagar</button></a>
         {% endif %}

@@ -273,7 +273,7 @@ def sobre_esta_aplicacao_view(request):
         'makingof': makingof,
         # Preenche estes dois quando tiveres o URL da fotografia e do vídeo:
         # 'foto_arquitetura': ...,   # ex: objeto com .url ou URL string
-        # 'foto_er': ...,
+        'foto_er': '/media/makingOf/ER.jpg',
         # 'video_tutorial_url': 'https://www.youtube.com/embed/SEU_VIDEO_ID',
         'github_url': 'https://github.com/a22407644DiogoNunes/Diogo-a22407644-PW.git',
     }
