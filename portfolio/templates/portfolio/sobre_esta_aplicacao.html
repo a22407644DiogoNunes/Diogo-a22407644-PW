@@ -1,7 +1,360 @@
-<!-- pagina.html -->
-
+{% extends 'portfolio/base.html' %}
 {% load markdownify %}
+{% block title %}Sobre esta Aplicação{% endblock %}
 
-<div>
-   {{ texto | markdownify }}
-</div>
+{% block content %}
+<h2>Sobre esta Aplicação</h2>
+
+<!-- ── 1. Arquitetura MVT ─────────────────────────────────────────── -->
+<section class="sobre-section">
+    <h2>1. Arquitetura MVT do Django</h2>
+    <p>
+        O Django segue o padrão <strong>MVT — Model, View, Template</strong>, uma variante do clássico MVC
+        adaptada ao contexto web. Os três componentes têm responsabilidades bem distintas:
+    </p>
+    <ul>
+        <li><strong>Model</strong> — Define a estrutura dos dados e comunica com a base de dados via ORM.
+            Cada classe em <code>models.py</code> corresponde a uma tabela na BD.</li>
+        <li><strong>View</strong> — Contém a lógica de negócio. Recebe o pedido HTTP, interage com os
+            Models e retorna uma resposta (normalmente renderizando um Template).</li>
+        <li><strong>Template</strong> — Ficheiro HTML com a linguagem de template do Django
+            que gera o HTML final enviado ao browser.</li>
+    </ul>
+
+    <h3>Fluxo de informação</h3>
+    <ol>
+        <li>O utilizador clica num link ou submete um formulário no <strong>browser</strong>.</li>
+        <li>O Django analisa o URL e, através do <code>urls.py</code>, mapeia-o para uma <strong>View</strong>.</li>
+        <li>A View consulta ou altera os dados através dos <strong>Models</strong> (ORM → SQLite).</li>
+        <li>A View passa os dados ao <strong>Template</strong>, que os renderiza em HTML.</li>
+        <li>O HTML é devolvido ao browser como resposta HTTP.</li>
+    </ol>
+
+    <h3>Desenho em papel</h3>
+    <div class="desenho-box">
+        <img src="/media/makingof/mvt_desenho.jpg" alt="Arquitetura MVT desenhada em papel"
+             style="max-width:100%;border-radius:6px;"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <p style="color:#9ca3af;font-style:italic;text-align:center;display:none;">
+            📷 Fotografia ainda não adicionada — guardar em <code>media/makingof/mvt_desenho.jpg</code>
+        </p>
+    </div>
+
+    <h3>Vídeo-tutorial — Formulário para criar um novo projeto</h3>
+    <div style="margin-top:0.8rem;">
+        <iframe width="700" height="394"
+            src="https://www.youtube.com/embed/VIDEO_ID_AQUI"
+            title="Tutorial Django — Criar Projeto com Formulário"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            style="max-width:100%;border-radius:6px;">
+        </iframe>
+        <p style="color:#9ca3af;font-size:0.82rem;margin-top:0.4rem;">
+            Substituir <code>VIDEO_ID_AQUI</code> pelo ID do vídeo no YouTube após gravar o tutorial.
+        </p>
+    </div>
+</section>
+
+
+<!-- ── 2. Modelação ───────────────────────────────────────────────── -->
+<section class="sobre-section">
+    <h2>2. Modelação</h2>
+
+    <h3>Diagrama Entidade-Relação</h3>
+    <div class="desenho-box">
+        <img src="/makingOf/media/ER.jpg" alt="Diagrama ER desenhado em papel"
+             style="max-width:100%;border-radius:6px;"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    </div>
+
+    <h3>Relações entre entidades</h3>
+    <ul>
+        <li><strong>Licenciatura ↔ Docente</strong>: N para N — um curso tem vários docentes; um docente pode estar em vários cursos.</li>
+        <li><strong>Licenciatura ↔ UnidadeCurricular</strong>: N para N — a mesma UC pode existir em vários cursos.</li>
+        <li><strong>UnidadeCurricular ↔ Docente</strong>: N para N — o mesmo docente pode lecionar várias cadeiras.</li>
+        <li><strong>UnidadeCurricular ↔ Tecnologia</strong>: N para N — Java está em Algoritmia e LP2; PW usa HTML, CSS, JS…</li>
+        <li><strong>UnidadeCurricular → Projeto</strong>: 1 para N — um projeto pertence a uma UC, mas uma UC tem vários projetos.</li>
+        <li><strong>Tecnologia ↔ TFC</strong>: N para N — cada TFC usa várias tecnologias; cada tecnologia aparece em vários TFCs.</li>
+        <li><strong>Tecnologia ↔ Formação</strong>: N para N — idem.</li>
+        <li><strong>Tecnologia ↔ Projeto</strong>: N para N — idem.</li>
+        <li><strong>Competência ↔ Projeto</strong>: N para N — um projeto desenvolve várias competências e vice-versa.</li>
+    </ul>
+
+    <h3>Modelação em <code>models.py</code></h3>
+    <pre class="code-block">
+class TipoTecnologia(models.Model):
+    TIPOS = [
+        ('frontend', 'Frontend'), ('backend', 'Backend'),
+        ('base_dados', 'Base de Dados'), ('storage', 'Storage'), ('outros', 'Outros'),
+    ]
+    nome = models.CharField(max_length=50, choices=TIPOS, unique=True)
+
+class Tecnologia(models.Model):
+    nome            = models.CharField(max_length=100)
+    descricao       = models.TextField()
+    o_que_faz       = models.TextField(blank=True)
+    o_que_permite   = models.TextField(blank=True)
+    opiniao_pessoal = models.TextField(blank=True)
+    interesse_pessoal = models.BooleanField(default=False)
+    link_site       = models.URLField(null=True, blank=True)
+    imagem          = models.ImageField(upload_to='tecnologias/', null=True, blank=True)
+    tipo            = models.ForeignKey(TipoTecnologia, on_delete=models.SET_NULL,
+                          null=True, blank=True, related_name="tecnologias")
+    unidades_curriculares = models.ManyToManyField(UnidadeCurricular,
+                          related_name="tecnologias", blank=True)
+
+class Projeto(models.Model):
+    nome               = models.CharField(max_length=255)
+    descricao          = models.TextField()
+    imagem             = models.ImageField(upload_to='projetos/', null=True, blank=True)
+    video              = models.URLField(null=True, blank=True)
+    link_github        = models.URLField()
+    unidade_curricular = models.ForeignKey(UnidadeCurricular, on_delete=models.CASCADE)
+    tecnologias        = models.ManyToManyField(Tecnologia, related_name="projetos")
+    competencias       = models.ManyToManyField(Competencia, related_name="projetos")</pre>
+</section>
+
+
+<!-- ── 3. Tecnologias ─────────────────────────────────────────────── -->
+<section class="sobre-section">
+    <h2>3. Tecnologias Utilizadas</h2>
+    <p>
+        As tecnologias usadas nesta aplicação estão organizadas por tipo e são as mesmas
+        registadas no portfólio, associadas ao projeto <em>Portfolio de Programação Web</em>.
+    </p>
+
+    {% for tipo, techs in tecnologias_por_tipo.items %}
+        <h3>{{ tipo }}</h3>
+        <div class="tech-grid">
+            {% for t in techs %}
+            <div class="tech-card">
+                <div class="tech-nome">
+                    {% if t.imagem %}
+                        <img src="{{ t.imagem.url }}" alt="{{ t.nome }}"
+                             style="height:18px;width:auto;vertical-align:middle;margin-right:6px;border-radius:3px;">
+                    {% endif %}
+                    {{ t.nome }}
+                </div>
+                {% if t.o_que_faz %}
+                    <div class="tech-label">O que faz</div>
+                    <div class="tech-desc">{{ t.o_que_faz }}</div>
+                {% endif %}
+                {% if t.o_que_permite %}
+                    <div class="tech-label">O que permite</div>
+                    <div class="tech-desc">{{ t.o_que_permite }}</div>
+                {% endif %}
+                {% if t.opiniao_pessoal %}
+                    <div class="tech-label">Opinião pessoal</div>
+                    <div class="tech-desc">{{ t.opiniao_pessoal }}</div>
+                {% endif %}
+                {% if t.link_site %}
+                    <a href="{{ t.link_site }}" target="_blank"
+                       style="font-size:0.8rem;color:#2563eb;margin-top:0.4rem;display:inline-block;">
+                        ↗ Site oficial
+                    </a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    {% empty %}
+        <p style="color:#9ca3af;font-style:italic;">
+            Adicione tecnologias na base de dados e associe-as a um TipoTecnologia.
+        </p>
+    {% endfor %}
+</section>
+
+
+<!-- ── 4. Estrutura de Navegação ──────────────────────────────────── -->
+<section class="sobre-section">
+    <h2>4. Estrutura de Navegação</h2>
+
+    <div class="desenho-box">
+        <p style="color:#9ca3af;font-style:italic;text-align:center;">
+            📝 Inserir aqui o mapa de navegação desenhado em papel.
+        </p>
+    </div>
+
+    <p>A aplicação tem a seguinte estrutura de páginas:</p>
+    <ul>
+        <li><strong>/</strong> — Página inicial</li>
+        <li><strong>/licenciaturas/</strong> — Lista de licenciaturas e docentes</li>
+        <li><strong>/unidades-curriculares/</strong> — Lista de unidades curriculares</li>
+        <li><strong>/docentes/</strong> — Lista de docentes</li>
+        <li><strong>/tecnologias/</strong> — Lista + CRUD de tecnologias</li>
+        <li><strong>/projetos/</strong> — Lista + CRUD de projetos</li>
+        <li><strong>/tfc/</strong> — Trabalhos de Fim de Curso</li>
+        <li><strong>/formacoes/</strong> — Lista + CRUD de formações</li>
+        <li><strong>/competencias/</strong> — Lista + CRUD de competências</li>
+        <li><strong>/makingof/</strong> — Making Of do projeto</li>
+        <li><strong>/sobre_esta_aplicacao</strong> — Esta página</li>
+    </ul>
+</section>
+
+
+<!-- ── 5. Repositório GitHub ──────────────────────────────────────── -->
+<section class="sobre-section">
+    <h2>5. Repositório GitHub</h2>
+    <p>
+        O código fonte desta aplicação está disponível no GitHub:<br>
+        <a href="https://github.com/SEU_UTILIZADOR/SEU_REPOSITORIO" target="_blank" style="font-weight:600;">
+            github.com/SEU_UTILIZADOR/SEU_REPOSITORIO
+        </a>
+        <br><small style="color:#9ca3af;">Substituir pelo link real do repositório.</small>
+    </p>
+
+    <h3>Como usei o Git e o GitHub</h3>
+    <p>
+        Ao longo do desenvolvimento usei o Git para controlo de versões, fazendo commits regulares
+        a cada funcionalidade concluída. O GitHub serviu como repositório remoto e backup do projeto.
+    </p>
+    <ul>
+        <li>Histórico completo de todas as alterações feitas ao código</li>
+        <li>Possibilidade de reverter para versões anteriores em caso de erro</li>
+        <li>Commits descritivos organizados por laboratório</li>
+        <li>Acesso ao código a partir de qualquer máquina via Codespaces</li>
+    </ul>
+</section>
+
+
+<!-- ── 6. Making Of ───────────────────────────────────────────────── -->
+<section class="sobre-section">
+    <h2>6. Making Of</h2>
+    <p>
+        Apontamentos sobre o processo de desenvolvimento — dificuldades, decisões,
+        erros encontrados e o que aprendi em cada fase do projeto.
+    </p>
+
+    {% if makingof %}
+        {% for mo in makingof %}
+        <div class="mo-entry">
+            <h3>{{ mo.nome }} <small style="color:#9ca3af;font-weight:400;">— {{ mo.data_relatorio }}</small></h3>
+            <div>{{ mo.descricao|markdownify }}</div>
+            {% if mo.erros_correcoes %}
+                <h4>⚠ Dificuldades &amp; Erros</h4>
+                <div>{{ mo.erros_correcoes|markdownify }}</div>
+            {% endif %}
+            {% if mo.uso_ia %}
+                <h4>🤖 Uso de IA</h4>
+                <div>{{ mo.uso_ia|markdownify }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <p style="color:#9ca3af;font-style:italic;">
+            Ainda não há registos de making-of. Adicione-os pelo painel de administração.
+        </p>
+    {% endif %}
+</section>
+
+
+<style>
+    .sobre-section {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        padding: 1.8rem 2rem;
+        margin-bottom: 1.8rem;
+    }
+    .sobre-section h2 {
+        font-size: 1.2rem;
+        color: #111827;
+        border-left: 4px solid #2563eb;
+        padding-left: 0.7rem;
+        margin-bottom: 1rem;
+    }
+    .sobre-section h3 {
+        font-size: 1rem;
+        color: #111827;
+        margin: 1.2rem 0 0.5rem;
+        font-weight: 600;
+    }
+    .sobre-section h4 {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        color: #9ca3af;
+        letter-spacing: 0.05em;
+        margin: 0.8rem 0 0.3rem;
+    }
+    .sobre-section p, .sobre-section li {
+        font-size: 0.92rem;
+        line-height: 1.75;
+        color: #374151;
+    }
+    .sobre-section ul, .sobre-section ol {
+        padding-left: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .sobre-section a { color: #2563eb; }
+    .sobre-section a:hover { text-decoration: underline; }
+
+    .desenho-box {
+        border: 2px dashed #e5e7eb;
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        background: #f9fafb;
+    }
+
+    .code-block {
+        background: #111827;
+        color: #d1fae5;
+        padding: 1rem 1.2rem;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        overflow-x: auto;
+        white-space: pre;
+        line-height: 1.7;
+        margin-top: 0.6rem;
+    }
+
+    /* Tecnologias */
+    .tech-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 12px;
+        margin: 0.8rem 0 1.2rem;
+    }
+    .tech-card {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 0.9rem 1rem;
+        border-left: 3px solid #2563eb;
+    }
+    .tech-nome {
+        font-weight: 600;
+        font-size: 0.92rem;
+        color: #111827;
+        margin-bottom: 0.4rem;
+    }
+    .tech-label {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        color: #9ca3af;
+        letter-spacing: 0.05em;
+        margin-top: 0.5rem;
+    }
+    .tech-desc {
+        font-size: 0.82rem;
+        color: #6b7280;
+        line-height: 1.5;
+    }
+
+    /* Making Of */
+    .mo-entry {
+        border-left: 3px solid #2563eb;
+        padding: 0.8rem 0 0.8rem 1.2rem;
+        margin-bottom: 1.2rem;
+    }
+    .mo-entry h3 { margin-top: 0; }
+    .mo-entry p, .mo-entry li {
+        font-size: 0.88rem;
+        color: #374151;
+        line-height: 1.7;
+    }
+    .mo-entry ul { padding-left: 1.2rem; }
+</style>
+
+{% endblock %}

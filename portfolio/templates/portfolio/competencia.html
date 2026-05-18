@@ -3,7 +3,7 @@
 {% block content %}
 <h2>Competências</h2>
 
-{% if request.user.is_authenticated and request.user.groups.filter(name='gestor-portfolio').exists %}
+{% if is_gestor %}
     <a href="{% url 'novo_competencia' %}">
         <button>Inserir nova Competecia</button>
     </a>
@@ -20,7 +20,7 @@
             <p>{{ c.descricao }}</p>
         </section>
 
-        {% if request.user.is_authenticated and request.user.groups.filter(name='gestor-portfolio').exists %}
+        {% if is_gestor %}
             <a href="{% url 'edita_competencia' c.id %}">
                 <button>Editar informação do Competencia</button>
             </a>

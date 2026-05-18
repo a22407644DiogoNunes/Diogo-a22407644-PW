@@ -48,9 +48,9 @@ class TipoTecnologia(models.Model):
 class Tecnologia(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.TextField()
-    o_que_faz = models.TextField(blank=True)               # NOVO
+    o_que_faz = models.TextField(blank=True)              
     o_que_permite = models.TextField(blank=True)
-    opiniao_pessoal = models.TextField(blank=True)         # NOVO (substitui interesse_pessoal bool)
+    opiniao_pessoal = models.TextField(blank=True)         
     tipo = models.ForeignKey(TipoTecnologia,on_delete=models.SET_NULL,null=True, blank=True,related_name="tecnologias")  
     interesse_pessoal = models.BooleanField(default=False)
     link_site = models.URLField(null=True, blank=True)

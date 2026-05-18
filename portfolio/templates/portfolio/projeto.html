@@ -3,7 +3,7 @@
 {% block content %}
 <h2>Projetos</h2>
 
-{% if request.user.is_authenticated and request.user.groups.filter(name='gestor-portfolio').exists %}
+{% if is_gestor %}
 <a href="{% url 'novo_projeto' %}">
     <button>Inserir novo Projeto</button>
 </a>
@@ -40,7 +40,7 @@
             </ul>
         </section>
 
-        {% if request.user.is_authenticated and request.user.groups.filter(name='gestor-portfolio').exists %}
+        {% if is_gestor %}
             <a href="{% url 'edita_projeto' p.id %}">
                 <button>Editar informação do Projeto</button>
             </a>

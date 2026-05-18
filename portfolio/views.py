@@ -38,7 +38,19 @@ def tecnologia_view(request):
 
     tecnologia = Tecnologia.objects.prefetch_related('unidades_curriculares').all()
 
-    return render(request, 'portfolio/tecnologia.html',{'tecnologia':tecnologia})
+    is_gestor = False
+
+    if request.user.is_authenticated:
+        is_gestor = request.user.groups.filter(
+            name='gestor-portfolio'
+        ).exists()
+
+    context = {
+        'tecnologia': tecnologia,
+        'is_gestor': is_gestor,
+    }
+
+    return render(request, 'portfolio/tecnologia.html',context)
 
 @login_required
 def novo_tecnologia_view(request):
@@ -77,7 +89,19 @@ def competencia_view(request):
 
     competencia = Competencia.objects.all()
 
-    return render(request, 'portfolio/competencia.html',{'competencia':competencia})
+    is_gestor = False
+
+    if request.user.is_authenticated:
+        is_gestor = request.user.groups.filter(
+            name='gestor-portfolio'
+        ).exists()
+
+    context = {
+        'competencia': competencia,
+        'is_gestor': is_gestor,
+    }
+
+    return render(request, 'portfolio/competencia.html',context)
 
 @login_required
 def novo_competencia_view(request):
@@ -116,7 +140,19 @@ def projeto_view(request):
 
     projeto = Projeto.objects.select_related('unidade_curricular').prefetch_related('tecnologias', 'competencias').all()
 
-    return render(request, 'portfolio/projeto.html',{'projeto':projeto})
+    is_gestor = False
+
+    if request.user.is_authenticated:
+        is_gestor = request.user.groups.filter(
+            name='gestor-portfolio'
+        ).exists()
+
+    context = {
+        'projeto': projeto,
+        'is_gestor': is_gestor,
+    }
+
+    return render(request, 'portfolio/projeto.html',context)
 
 @login_required
 def novo_projeto_view(request):
@@ -163,7 +199,19 @@ def formacao_view(request):
 
     formacao = Formacao.objects.prefetch_related('tecnologias').all()
 
-    return render(request,'portfolio/formacao.html',{'formacao':formacao})
+    is_gestor = False
+
+    if request.user.is_authenticated:
+        is_gestor = request.user.groups.filter(
+            name='gestor-portfolio'
+        ).exists()
+
+    context = {
+        'formacao': formacao,
+        'is_gestor': is_gestor,
+    }
+
+    return render(request,'portfolio/formacao.html',context)
 
 @login_required
 def novo_formacao_view(request):
@@ -207,11 +255,26 @@ def makingof_view(request):
 #-------------------------------------------------------------------------------------#
 
 def sobre_esta_aplicacao_view(request):
-
-    texto = """
-#Sobre esta Aplicação
-#  
-
-"""
-
-    return render(request, 'portfolio/sobre_esta_aplicacao.html',{'texto':texto})
+    from itertools import groupby
+    from collections import defaultdict
+ 
+    # Tecnologias agrupadas por tipo
+    tecnologias = Tecnologia.objects.select_related('tipo').all().order_by('tipo__nome')
+    tecnologias_por_tipo = defaultdict(list)
+    for t in tecnologias:
+        chave = t.tipo.get_nome_display() if t.tipo else 'Outros'
+        tecnologias_por_tipo[chave].append(t)
+ 
+    # Making Of
+    makingof = MakingOf.objects.all().order_by('data_relatorio')
+ 
+    context = {
+        'tecnologias_por_tipo': dict(tecnologias_por_tipo),
+        'makingof': makingof,
+        # Preenche estes dois quando tiveres o URL da fotografia e do vídeo:
+        # 'foto_arquitetura': ...,   # ex: objeto com .url ou URL string
+        # 'foto_er': ...,
+        # 'video_tutorial_url': 'https://www.youtube.com/embed/SEU_VIDEO_ID',
+        'github_url': 'https://github.com/a22407644DiogoNunes/Diogo-a22407644-PW.git',
+    }
+    return render(request, 'portfolio/sobre_esta_aplicacao.html', context)
