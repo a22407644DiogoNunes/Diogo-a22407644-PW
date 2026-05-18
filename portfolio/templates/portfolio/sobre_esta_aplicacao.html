@@ -32,12 +32,7 @@
 
     <h3>Desenho em papel</h3>
     <div class="desenho-box">
-        <img src="/media/makingof/mvt_desenho.jpg" alt="Arquitetura MVT desenhada em papel"
-             style="max-width:100%;border-radius:6px;"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-        <p style="color:#9ca3af;font-style:italic;text-align:center;display:none;">
-            📷 Fotografia ainda não adicionada — guardar em <code>media/makingof/mvt_desenho.jpg</code>
-        </p>
+        <img src="{{foto_arquitetura}}" alt="Arquitetura MVT desenhada em papel"style="max-width:100%;border-radius:6px;">
     </div>
 
     <h3>Vídeo-tutorial — Formulário para criar um novo projeto</h3>
@@ -50,9 +45,6 @@
             allowfullscreen
             style="max-width:100%;border-radius:6px;">
         </iframe>
-        <p style="color:#9ca3af;font-size:0.82rem;margin-top:0.4rem;">
-            Substituir <code>VIDEO_ID_AQUI</code> pelo ID do vídeo no YouTube após gravar o tutorial.
-        </p>
     </div>
 </section>
 
@@ -166,12 +158,6 @@ class Projeto(models.Model):
 <!-- ── 4. Estrutura de Navegação ──────────────────────────────────── -->
 <section class="sobre-section">
     <h2>4. Estrutura de Navegação</h2>
-
-    <div class="desenho-box">
-        <p style="color:#9ca3af;font-style:italic;text-align:center;">
-            📝 Inserir aqui o mapa de navegação desenhado em papel.
-        </p>
-    </div>
 
     <p>A aplicação tem a seguinte estrutura de páginas:</p>
     <ul>
