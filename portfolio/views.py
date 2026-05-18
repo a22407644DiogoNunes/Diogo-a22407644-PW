@@ -122,11 +122,11 @@ def edita_competencia_view(request, competencia_id):
         if form.is_valid():
             form.save()
             return redirect('competencia')
-        else:
-            form = CompetenciaForm(instance=competencia)
+    else:
+        form = CompetenciaForm(instance=competencia)
 
-        context = {'form': form, 'competencia':competencia}
-        return render(request, 'portfolio/edita_competencia.html', context)
+    context = {'form': form, 'competencia':competencia}
+    return render(request, 'portfolio/edita_competencia.html', context)
 
 @login_required
 def apaga_competencia_view(request, competencia_id):
@@ -154,7 +154,7 @@ def projeto_view(request):
 
     return render(request, 'portfolio/projeto.html',context)
 
-@login_required
+
 def novo_projeto_view(request):
     form = ProjetoForm(request.POST or None, request.FILES)
     if form.is_valid():
@@ -164,7 +164,7 @@ def novo_projeto_view(request):
     context = {'form': form}
     return render(request, 'portfolio/novo_projeto.html', context)
 
-@login_required
+
 def edita_projeto_view(request, projeto_id):
     projeto = Projeto.objects.get(id=projeto_id)
 
@@ -173,11 +173,11 @@ def edita_projeto_view(request, projeto_id):
         if form.is_valid():
             form.save()
             return redirect('projeto')
-        else:
-            form = ProjetoForm(instance=projeto)
+    else:
+        form = ProjetoForm(instance=projeto)
 
-        context = {'form': form, 'projeto':projeto}
-        return render(request, 'portfolio/edita_projeto.html', context)
+    context = {'form': form, 'projeto':projeto}
+    return render(request, 'portfolio/edita_projeto.html', context)
 
 @login_required
 def apaga_projeto_view(request, projeto_id):
@@ -232,11 +232,11 @@ def edita_formacao_view(request, formacao_id):
         if form.is_valid():
             form.save()
             return redirect('formacao')
-        else:
-            form = FormacaoForm(instance=formacao)
+    else:
+        form = FormacaoForm(instance=formacao)
 
-        context = {'form': form, 'formacao':formacao}
-        return render(request, 'portfolio/edita_formacao.html', context)
+    context = {'form': form, 'formacao':formacao}
+    return render(request, 'portfolio/edita_formacao.html', context)
 
 @login_required
 def apaga_formacao_view(request, formacao_id):
@@ -271,8 +271,7 @@ def sobre_esta_aplicacao_view(request):
     context = {
         'tecnologias_por_tipo': dict(tecnologias_por_tipo),
         'makingof': makingof,
-        # Preenche estes dois quando tiveres o URL da fotografia e do vídeo:
-        # 'video_tutorial_url': 'https://www.youtube.com/embed/SEU_VIDEO_ID',
+        'video_tutorial_url': 'https://youtu.be/dGNzlQX0LEY',
         'github_url': 'https://github.com/a22407644DiogoNunes/Diogo-a22407644-PW.git',
     }
     return render(request, 'portfolio/sobre_esta_aplicacao.html', context)
