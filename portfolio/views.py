@@ -267,13 +267,14 @@ def sobre_esta_aplicacao_view(request):
  
     # Making Of
     makingof = MakingOf.objects.all().order_by('data_relatorio')
+
+    makingof_mvt = MakingOf.objects.filter(nome__icontains='MVT').first()
+    makingof_er  = MakingOf.objects.filter(nome__icontains='ER').first()
  
     context = {
         'tecnologias_por_tipo': dict(tecnologias_por_tipo),
         'makingof': makingof,
         # Preenche estes dois quando tiveres o URL da fotografia e do vídeo:
-        'foto_arquitetura': '/media/makingOf/MVT.jpg',   
-        'foto_er': '/media/makingOf/ER.jpg',
         # 'video_tutorial_url': 'https://www.youtube.com/embed/SEU_VIDEO_ID',
         'github_url': 'https://github.com/a22407644DiogoNunes/Diogo-a22407644-PW.git',
     }

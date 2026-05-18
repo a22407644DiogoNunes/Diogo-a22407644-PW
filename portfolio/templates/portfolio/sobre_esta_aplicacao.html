@@ -1,4 +1,5 @@
 {% extends 'portfolio/base.html' %}
+{% load static %}
 {% load markdownify %}
 {% block title %}Sobre esta Aplicação{% endblock %}
 
@@ -32,7 +33,7 @@
 
     <h3>Desenho em papel</h3>
     <div class="desenho-box">
-        <img src="{{foto_arquitetura}}" alt="Arquitetura MVT desenhada em papel"style="max-width:100%;border-radius:6px;">
+        <img src="{% static 'portfolio/makingof/MVT.jpg' %}" alt="Arquitetura MVT" style="max-width:100%;border-radius:6px;">
     </div>
 
     <h3>Vídeo-tutorial — Formulário para criar um novo projeto</h3>
@@ -55,7 +56,7 @@
 
     <h3>Diagrama Entidade-Relação</h3>
     <div class="desenho-box">
-        <img src="{{foto_er}}" alt="Diagrama ER desenhado em papel" style="max-width:100%;border-radius:6px;">
+        <img src="{% static 'portfolio/makingof/ER.jpg' %}" alt="Diagrama ER" style="max-width:100%;border-radius:6px;">
     </div>
 
     <h3>Relações entre entidades</h3>
@@ -148,9 +149,6 @@ class Projeto(models.Model):
             {% endfor %}
         </div>
     {% empty %}
-        <p style="color:#9ca3af;font-style:italic;">
-            Adicione tecnologias na base de dados e associe-as a um TipoTecnologia.
-        </p>
     {% endfor %}
 </section>
 
