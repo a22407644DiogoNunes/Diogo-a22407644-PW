@@ -267,9 +267,6 @@ def sobre_esta_aplicacao_view(request):
  
     # Making Of
     makingof = MakingOf.objects.all().order_by('data_relatorio')
-
-    makingof_mvt = MakingOf.objects.filter(nome__icontains='MVT').first()
-    makingof_er  = MakingOf.objects.filter(nome__icontains='ER').first()
  
     context = {
         'tecnologias_por_tipo': dict(tecnologias_por_tipo),
